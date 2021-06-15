@@ -5,6 +5,10 @@ require('dotenv').config()
 const app = express()
 
 app.use(express.json())
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'))
+}
+
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -13,9 +17,6 @@ const transporter = nodemailer.createTransport({
         pass:process.env.pass
     }
 })
-
-
-
 
 app.post('/send', async(req, res)=>{
     try{
